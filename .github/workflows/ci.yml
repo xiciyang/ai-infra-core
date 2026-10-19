@@ -7,5 +7,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '24' }
-      - name: Contract suite (clean machine: external-state checks must SKIP, not pass)
+      - name: Contract suite
+        # clean machine: external-state checks must SKIP, never pass
         run: node scripts/run-all.mjs
