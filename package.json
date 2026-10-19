@@ -1,0 +1,19 @@
+{
+  "name": "ai-infra-core",
+  "version": "0.1.0",
+  "description": "Seven zero-dependency primitives for proving things about models — measurement validity, leakage-free splits, audit chains, sandbox probes — and failing loudly when a proof is invalid.",
+  "type": "module",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiciyang/ai-infra-core.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node scripts/run-all.mjs",
+    "test:json": "node scripts/run-all.mjs --json",
+    "contracts": "node scripts/gen-contracts.mjs --check"
+  }
+}

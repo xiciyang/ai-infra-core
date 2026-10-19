@@ -1,0 +1,39 @@
+{
+  "name": "@ai-infra/audit-core",
+  "version": "0.0.2",
+  "description": "append-only 审计哈希链 v0",
+  "type": "module",
+  "main": "./src/index.mjs",
+  "exports": {
+    ".": {
+      "default": "./src/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "CONTRACT.md"
+  ],
+  "license": "BSD-3-Clause",
+  "dependencies": {},
+  "scripts": {
+    "test": "node ../../scripts/run-all.mjs audit-core"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiciyang/ai-infra-core.git"
+  },
+  "homepage": "https://github.com/xiciyang/ai-infra-core#readme",
+  "bugs": {
+    "url": "https://github.com/xiciyang/ai-infra-core/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "ai-infra",
+    "contract-tests"
+  ]
+}
