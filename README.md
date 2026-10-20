@@ -121,6 +121,7 @@ bundle: it depends on versioned `@xiciyang/*` libraries, never on a sibling chec
 | training | `@xiciyang/training-rl` | `dsh plugin add github:xiciyang/training-rl` |
 | training | `@xiciyang/training-qat` | `dsh plugin add github:xiciyang/training-qat` |
 | training | `@xiciyang/training-pretrain` | `dsh plugin add github:xiciyang/training-pretrain` |
+| judgment (experimental) | `@xiciyang/rsi-contract` | `npm i @xiciyang/rsi-contract` |
 
 The shared judgment rules travel with the libraries; the plugins carry the hardware-facing work
 (serving, quantization, tuning, training) and stay replaceable. Nothing here hard-codes a device
