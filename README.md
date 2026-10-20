@@ -105,6 +105,29 @@ to canonical JSON breaks verification of hundreds of on-disk records) and report
 The assertion count is deliberately **not** a constant: two libraries verify state that lives outside
 this repo. The reproducible criterion is **0 failures**, with the skip list shown.
 
+## Suite map / 套件地图
+
+These are the public pieces of the same stack. Every plugin is an independently installable DSH
+bundle: it depends on versioned `@xiciyang/*` libraries, never on a sibling checkout.
+
+| Layer | Component | Install |
+|---|---|---|
+| primitives | `@xiciyang/{testing,data,state,audit,sandbox,training,evidence}-core` | `npm i @xiciyang/testing-core` |
+| inference | `inference-serving` | `dsh plugin add github:xiciyang/inference-serving` |
+| inference | `inference-quantization` | `dsh plugin add github:xiciyang/inference-quantization` |
+| inference | `inference-tuning` | `dsh plugin add github:xiciyang/inference-tuning` |
+| inference | `inference-diagnose` | `dsh plugin add github:xiciyang/inference-diagnose` |
+| training | `@xiciyang/training-sft` | `dsh plugin add github:xiciyang/training-sft` |
+| training | `@xiciyang/training-rl` | `dsh plugin add github:xiciyang/training-rl` |
+| training | `@xiciyang/training-qat` | `dsh plugin add github:xiciyang/training-qat` |
+| training | `@xiciyang/training-pretrain` | `dsh plugin add github:xiciyang/training-pretrain` |
+
+The shared judgment rules travel with the libraries; the plugins carry the hardware-facing work
+(serving, quantization, tuning, training) and stay replaceable. Nothing here hard-codes a device
+path, a model name or a machine layout: model roots, dataset paths and accelerators are configured
+by the caller (`DSH_MODEL_ROOTS`, `DSH_BASE_MODEL`, `DSH_SHARD_PATH`, …) and missing configuration is
+reported as a missing prerequisite, not guessed.
+
 ## What this is not
 
 - Not a framework. No scheduler, no plugin loader, no model runtime.

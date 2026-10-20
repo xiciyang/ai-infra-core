@@ -1,6 +1,6 @@
 {
   "name": "@xiciyang/training-core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "公共训练循环/checkpoint/资源上限/审计钩子 v0",
   "type": "module",
   "main": "./src/index.mjs",
@@ -16,13 +16,6 @@
   ],
   "license": "BSD-3-Clause",
   "dependencies": {},
-  "optionalDependencies": {
-    "torch": ">=2.0.0 <3",
-    "transformers": ">=4.40.0 <6",
-    "peft": ">=0.10.0 <1",
-    "trl": ">=0.9.0 <1",
-    "accelerate": ">=0.30.0 <2"
-  },
   "scripts": {
     "test": "node ../../scripts/run-all.mjs training-core"
   },
@@ -42,5 +35,29 @@
     "deepseek-harness",
     "ai-infra",
     "contract-tests"
-  ]
+  ],
+  "peerDependencies": {
+    "torch": ">=2.0.0 <3",
+    "transformers": ">=4.40.0 <6",
+    "peft": ">=0.10.0 <1",
+    "trl": ">=0.9.0 <1",
+    "accelerate": ">=0.30.0 <2"
+  },
+  "peerDependenciesMeta": {
+    "torch": {
+      "optional": true
+    },
+    "transformers": {
+      "optional": true
+    },
+    "peft": {
+      "optional": true
+    },
+    "trl": {
+      "optional": true
+    },
+    "accelerate": {
+      "optional": true
+    }
+  }
 }

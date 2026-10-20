@@ -1,6 +1,6 @@
 {
   "name": "@xiciyang/evidence-core",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "type": "module",
   "main": "./src/index.mjs",
   "exports": {
@@ -29,5 +29,9 @@
   "scripts": {
     "test": "node ../../scripts/run-all.mjs evidence-core"
   },
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "files": [
+    "src",
+    "CONTRACT.md"
+  ]
 }
