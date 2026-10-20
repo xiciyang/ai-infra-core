@@ -1,5 +1,5 @@
 {
-  "name": "ai-infra-core",
+  "name": "@xiciyang/ai-infra-core",
   "version": "0.1.0",
   "description": "Seven zero-dependency primitives for proving things about models — measurement validity, leakage-free splits, audit chains, sandbox probes — and failing loudly when a proof is invalid.",
   "type": "module",
@@ -15,5 +15,6 @@
     "test": "node scripts/run-all.mjs",
     "test:json": "node scripts/run-all.mjs --json",
     "contracts": "node scripts/gen-contracts.mjs --check"
-  }
+  },
+  "private": true
 }
