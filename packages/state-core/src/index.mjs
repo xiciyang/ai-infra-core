@@ -1,5 +1,5 @@
 /**
- * @ai-infra/state-core —— 共享状态方言 / schema 校验 / 原子写 / 乐观并发 v0
+ * @xiciyang/state-core —— 共享状态方言 / schema 校验 / 原子写 / 乐观并发 v0
  * （契约冻结于 2026-09-28 长任务 1 / 阶段 B）。
  *
  * 这个库存在的理由（NEXT_STEPS §3.3）：

@@ -1,5 +1,5 @@
 {
-  "name": "@ai-infra/evidence-core",
+  "name": "@xiciyang/evidence-core",
   "version": "0.1.0",
   "type": "module",
   "main": "./src/index.mjs",
@@ -28,5 +28,6 @@
   ],
   "scripts": {
     "test": "node ../../scripts/run-all.mjs evidence-core"
-  }
+  },
+  "license": "BSD-3-Clause"
 }

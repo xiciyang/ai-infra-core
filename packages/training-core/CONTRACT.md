@@ -1,4 +1,4 @@
-# @ai-infra/training-core —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）
+# @xiciyang/training-core —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）
 
 > 公共训练循环 / checkpoint / 资源上限 / 审计钩子。
 > **本文件的「导出面」一节由 `shared/gen-contracts.mjs` 从代码现场读取生成，请勿手改**；
@@ -26,8 +26,8 @@
 ## 不包含（v0 明确排除 —— 让「忘了做」与「主动不做」可区分）
 
 - 具体训练算法（SFT / 预训练 / RL / QAT 各自的实现）—— 属各 `training-*-plugin`
-- 数据预处理 / 分词 / 切分 —— 归 `@ai-infra/data-core`
-- 评估逻辑（精度/性能测量与门禁）—— 归 `@ai-infra/testing-core`
+- 数据预处理 / 分词 / 切分 —— 归 `@xiciyang/data-core`
+- 评估逻辑（精度/性能测量与门禁）—— 归 `@xiciyang/testing-core`
 - 分布式训练策略（DDP / FSDP / TP / PP）—— **v0 不含**，并发恒为 1
 - 模型结构定义 / 权重加载器 —— 由插件自己的可选依赖框架提供
 - 调度与编排（何时启动下一次训练）—— 属上层

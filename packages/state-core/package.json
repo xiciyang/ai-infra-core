@@ -1,5 +1,5 @@
 {
-  "name": "@ai-infra/state-core",
+  "name": "@xiciyang/state-core",
   "version": "0.0.1",
   "description": "共享状态方言 v0（受限 YAML/原子写/schema 校验/乐观并发）",
   "type": "module",

@@ -1,5 +1,5 @@
 /**
- * @ai-infra/training-core —— 公共训练循环 / checkpoint / 资源上限 / 审计钩子 v0
+ * @xiciyang/training-core —— 公共训练循环 / checkpoint / 资源上限 / 审计钩子 v0
  * （契约冻结于 2026-09-28 长任务 1 / 阶段 B）。
  *
  * ────────────────────────────────────────────────────────────────────────
@@ -14,8 +14,8 @@
  *
  * **不包含**（v0 明确排除，写在这里是为了让"忘了做"与"主动不做"可区分）：
  *   ① 具体训练算法（SFT / 预训练 / RL / QAT 各自的实现）—— 属各 training-*-plugin
- *   ② 数据预处理 / 分词 / 切分 —— 归 `@ai-infra/data-core`
- *   ③ 评估逻辑（精度/性能测量与门禁）—— 归 `@ai-infra/testing-core`
+ *   ② 数据预处理 / 分词 / 切分 —— 归 `@xiciyang/data-core`
+ *   ③ 评估逻辑（精度/性能测量与门禁）—— 归 `@xiciyang/testing-core`
  *   ④ 分布式训练策略（DDP / FSDP / TP / PP）—— **v0 不含**；并发恒为 1
  *   ⑤ 模型结构定义 / 权重加载器 —— 由插件用自己声明为**可选依赖组**的框架提供
  *   ⑥ 调度与编排（何时启动下一次训练）—— 属上层
@@ -874,11 +874,11 @@ export async function removeCheckpoint(dir, name) {
 
 /**
  * 审计钩子工厂 —— 把"每次 run 的起止与停止原因"写进哈希链。
- * `append` 由调用方注入（通常是 `@ai-infra/audit-core` 的 `appendAudit`），
+ * `append` 由调用方注入（通常是 `@xiciyang/audit-core` 的 `appendAudit`），
  * 这样本库**不依赖** audit-core（保持零依赖），但也不自己重写一遍链算法。
  */
 export function createAuditHook({ append, root, pkg = 'training', pkgVersion = '0.0.0', now = () => new Date() }) {
-  if (typeof append !== 'function') throw new Error('createAuditHook 需要注入 append（来自 @ai-infra/audit-core）')
+  if (typeof append !== 'function') throw new Error('createAuditHook 需要注入 append（来自 @xiciyang/audit-core）')
   return {
     async beforeStep({ state, batch }) {
       if (state.step === 0) await append({ root, pkg, pkgVersion, entry: { capability: state.plugin, action: 'train', phase: 'begin', algorithm: state.algorithm, batchSize: Array.isArray(batch) ? batch.length : (batch?.size ?? null) }, date: now() })

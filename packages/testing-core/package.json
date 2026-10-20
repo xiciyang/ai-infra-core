@@ -1,5 +1,5 @@
 {
-  "name": "@ai-infra/testing-core",
+  "name": "@xiciyang/testing-core",
   "version": "0.0.1",
   "description": "测量原语 v0（NLL/困惑度均匀签名/相对变化/双重门禁/浮点指纹）",
   "type": "module",

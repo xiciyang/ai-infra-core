@@ -1,5 +1,5 @@
 /**
- * @ai-infra/audit-core —— append-only 审计哈希链 v0
+ * @xiciyang/audit-core —— append-only 审计哈希链 v0
  * （契约冻结于 2026-09-28 长任务 1 / 阶段 B）。
  *
  * 这个库存在的理由：这台机器上**已经有四条独立的哈希链实现**

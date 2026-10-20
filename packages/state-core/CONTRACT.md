@@ -1,4 +1,4 @@
-# @ai-infra/state-core —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）
+# @xiciyang/state-core —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）
 
 > 共享状态方言 / schema / 原子写。
 > **本文件的「导出面」一节由 `shared/gen-contracts.mjs` 从代码现场读取生成，请勿手改**；

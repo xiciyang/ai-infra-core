@@ -1,5 +1,5 @@
 {
-  "name": "@ai-infra/training-core",
+  "name": "@xiciyang/training-core",
   "version": "0.0.1",
   "description": "公共训练循环/checkpoint/资源上限/审计钩子 v0",
   "type": "module",

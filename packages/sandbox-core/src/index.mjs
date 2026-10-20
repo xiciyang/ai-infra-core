@@ -1,5 +1,5 @@
 /**
- * @ai-infra/sandbox-core —— 三级沙箱能力探测与产物转移 v0
+ * @xiciyang/sandbox-core —— 三级沙箱能力探测与产物转移 v0
  * （契约冻结于 2026-09-28 长任务 1 / 阶段 B）。
  *
  * 这个库存在的理由：本机实测沙箱能力是 **process ✗ / container ✓ / vm ✗**

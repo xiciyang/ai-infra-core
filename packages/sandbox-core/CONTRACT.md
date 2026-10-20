@@ -1,4 +1,4 @@
-# @ai-infra/sandbox-core —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）
+# @xiciyang/sandbox-core —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）
 
 > 三级沙箱行为探测与产物转移。
 > **本文件的「导出面」一节由 `shared/gen-contracts.mjs` 从代码现场读取生成，请勿手改**；

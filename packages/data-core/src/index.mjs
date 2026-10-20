@@ -1,5 +1,5 @@
 /**
- * @ai-infra/data-core —— 数据集原语 v0（契约冻结于 2026-09-28 长任务 1 / 阶段 B）。
+ * @xiciyang/data-core —— 数据集原语 v0（契约冻结于 2026-09-28 长任务 1 / 阶段 B）。
  *
  * 这个库存在的理由：`inference_quantization_dataset_prepare` 已经有一套
  * "内容哈希去重 + 确定性切分 + 去泄漏复核 + 血缘"语义，训练侧必须与它**同口径** ——

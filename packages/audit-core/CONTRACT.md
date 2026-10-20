@@ -1,4 +1,4 @@
-# @ai-infra/audit-core —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）
+# @xiciyang/audit-core —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）
 
 > append-only 审计哈希链。
 > **本文件的「导出面」一节由 `shared/gen-contracts.mjs` 从代码现场读取生成，请勿手改**；

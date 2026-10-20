@@ -22,13 +22,13 @@ reused and attacked independently of any GPU.
 
 | Package | What it decides | Why it exists |
 |---|---|---|
-| `@ai-infra/testing-core` | NLL / perplexity / uniform signature / relative change / **dual gate** / float fingerprint / forgetting gate | A value only counts after validity is established |
-| `@ai-infra/data-core` | Content hashing, dedup, deterministic split, **leakage removal**, lineage, PII scan | Calibration and test sets must not intersect |
-| `@ai-infra/state-core` | Shared YAML dialect, schema validation, atomic write, optimistic concurrency | Three plugins had three dialects |
-| `@ai-infra/audit-core` | Append-only hash chains (two variants) + independent re-verification | "Audited" means a third party can recompute it |
-| `@ai-infra/sandbox-core` | Three-level sandbox behaviour probe and degrade policy | "Sandboxed" must be measured, not assumed |
-| `@ai-infra/training-core` | Public training loop, checkpoint, resource limits, audit hooks | Framework code stays out of the plugins |
-| `@ai-infra/evidence-core` | Facts → relations → derivation → case library | An inference must not masquerade as a fact |
+| `@xiciyang/testing-core` | NLL / perplexity / uniform signature / relative change / **dual gate** / float fingerprint / forgetting gate | A value only counts after validity is established |
+| `@xiciyang/data-core` | Content hashing, dedup, deterministic split, **leakage removal**, lineage, PII scan | Calibration and test sets must not intersect |
+| `@xiciyang/state-core` | Shared YAML dialect, schema validation, atomic write, optimistic concurrency | Three plugins had three dialects |
+| `@xiciyang/audit-core` | Append-only hash chains (two variants) + independent re-verification | "Audited" means a third party can recompute it |
+| `@xiciyang/sandbox-core` | Three-level sandbox behaviour probe and degrade policy | "Sandboxed" must be measured, not assumed |
+| `@xiciyang/training-core` | Public training loop, checkpoint, resource limits, audit hooks | Framework code stays out of the plugins |
+| `@xiciyang/evidence-core` | Facts → relations → derivation → case library | An inference must not masquerade as a fact |
 
 Each package is `packages/<name>/` with `src/`, `tests/contract.mjs` and `CONTRACT.md`.
 
@@ -42,7 +42,7 @@ cd ai-infra-core
 node --version    # >= 20
 ```
 
-Each package is standard ESM and can be referenced by path (`"@ai-infra/testing-core": "file:../ai-infra-core/packages/testing-core"`)
+Each package is standard ESM and can be referenced by path (`"@xiciyang/testing-core": "file:../ai-infra-core/packages/testing-core"`)
 or copied into a monorepo. No build step, no install step.
 
 ## 用法 / Usage
@@ -54,9 +54,9 @@ node scripts/run-all.mjs audit-core      # one package
 ```
 
 ```js
-import { dualGate, uniformSignature, perplexity } from '@ai-infra/testing-core'
-import { splitDeterministic, assertNoLeak } from '@ai-infra/data-core'
-import { appendAudit, verifyChain } from '@ai-infra/audit-core'
+import { dualGate, uniformSignature, perplexity } from '@xiciyang/testing-core'
+import { splitDeterministic, assertNoLeak } from '@xiciyang/data-core'
+import { appendAudit, verifyChain } from '@xiciyang/audit-core'
 ```
 
 `CONTRACT.md` in each package is the authoritative export surface; treat it as frozen.

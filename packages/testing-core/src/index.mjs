@@ -1,5 +1,5 @@
 /**
- * @ai-infra/testing-core —— 测量原语 v0（契约冻结于 2026-09-28 长任务 1 / 阶段 B）。
+ * @xiciyang/testing-core —— 测量原语 v0（契约冻结于 2026-09-28 长任务 1 / 阶段 B）。
  *
  * 这个库存在的理由（NEXT_STEPS §3.3）：
  *   quantization 与 tuning **各写了一份精度测量实现**，两份实现之间只靠推理侧契约层的

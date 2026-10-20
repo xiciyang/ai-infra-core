@@ -107,7 +107,7 @@ export const NOTES = {
       '**测量仪器来源（v0.3.0 追加）**：`instrumentFromDeployReport(deployReport)` 把 `inference-serving/deploy-report@1` 归一化成一份小的、JSON 安全的仪器记录（`effectiveConfig` = **真正部署**的那份配置、`degrade{steps,lossy,lossyWarning,tiers[]}`、`requestedConfig`、`degradedFrom`、`lossy`）。**纯函数**：只取叶子字段、绝不嵌入活对象（函数 / 循环引用 / 超深嵌套一律丢弃）；认不出形状或缺报告返回 `null`（**不抛错、也不编造**）。`assertInstrumentUsable(instrument, {runId})` 在 `instrument.lossy === true` 时抛 `E_INSTRUMENT_LOSSY`（带档位 id 与可执行补救），**`instrument == null` 不抛** —— 它只拒绝**已知有损**，"没有记录"由产物里的 `instrument: null` 显式承载。为什么需要：`eval-result@1` 曾只写判决不写仪器，实测一次 RL 测量里部署落进有损档位 `precision`（`dtype=half` + `quantization=fp8`），同一份权重测出 `25/48` 而非 `23/48`、判决翻转，而产物里没有任何字段表明被测模型已被量化。',
     ],
     includes: ['公共训练循环 `createTrainingLoop`（逐步档位）', '单体循环 `createMonolithicLoop`（v0.2.0 新增）', '档位判定 `pluginMode` / `MODES`', '产物级断言 `fingerprintArtifacts` / `assertArtifactChanged`', 'checkpoint 生命周期 `saveCheckpoint` / `loadCheckpoint` / `listCheckpoints`', '资源上限强制 `enforceLimits`', '审计钩子 `createAuditHook`', '预算默认值 `BUDGET_DEFAULTS`', '测量仪器来源 `instrumentFromDeployReport` / `assertInstrumentUsable`（v0.3.0 新增）', '产物存储 dtype 策略 `DTYPE_POLICY` / `normalizeDtype` / `readSafetensorsDtypes` / `readTensorDtypes` / `assertProductDtype` / `assertComparableDtype`（v0.4.0 新增）'],
-    excludes: ['具体训练算法（SFT / 预训练 / RL / QAT 各自的实现）—— 属各 `training-*-plugin`', '数据预处理 / 分词 / 切分 —— 归 `@ai-infra/data-core`', '评估逻辑（精度/性能测量与门禁）—— 归 `@ai-infra/testing-core`', '分布式训练策略（DDP / FSDP / TP / PP）—— **v0 不含**，并发恒为 1', '模型结构定义 / 权重加载器 —— 由插件自己的可选依赖框架提供', '调度与编排（何时启动下一次训练）—— 属上层'],
+    excludes: ['具体训练算法（SFT / 预训练 / RL / QAT 各自的实现）—— 属各 `training-*-plugin`', '数据预处理 / 分词 / 切分 —— 归 `@xiciyang/data-core`', '评估逻辑（精度/性能测量与门禁）—— 归 `@xiciyang/testing-core`', '分布式训练策略（DDP / FSDP / TP / PP）—— **v0 不含**，并发恒为 1', '模型结构定义 / 权重加载器 —— 由插件自己的可选依赖框架提供', '调度与编排（何时启动下一次训练）—— 属上层'],
     mockStrategy: '契约测试用 `{ id:"mock-sft", async step(batch){ return { loss: 1/(n+1) } } }` 把循环、上限、checkpoint、审计全部跑通 —— 零 GPU、零框架、零网络。**若有人往 training-core 里塞进 `import torch`，这个测试会立刻跑不起来**，这就是 mock 策略被破坏的最早信号。',
     optionalDeps: ['torch', 'transformers', 'peft', 'trl', 'accelerate'],
     testCriteria: 'mock 插件跑通全循环；数据耗尽必须有上界（否则空转 —— v0 修掉的真实缺陷）；注入 clock 断言墙钟超限暂停；checkpoint 往返哈希一致、被改动必须抛 `E_CHECKPOINT_CORRUPT`；审计链可复算且不含样本内容；导出面不得出现分布式/具体算法入口。**v0.2.0 追加**：四种非法插件形状装配期全拒（含"两档同时声明"）；单体档位步数停在上限、四个等价钩子全触发、checkpoint 可被 loadCheckpoint 读回；**阳性对照**：插件无视 stop 继续跑 ⇒ 事后核对记为越限且如实记账实际步数；0 步入违规；权重指纹逐位不变 ⇒ `E_NO_OP_TRAINING`。**v0.3.0 追加（仪器来源）**：有损 deploy-report ⇒ `lossy=true` 且档位 id 按 history 顺序完整捕获；无损 ⇒ `lossy=false` 且 `tiers=[]`；`degrade.lossy` 漏写但 history 里有有损条目 ⇒ 仍判有损；缺报告 / 非报告形状 ⇒ 全 `null` 且不抛错；含函数与循环引用的入参不抛错且活对象被丢弃（不进记录）；有损 ⇒ 抛 `E_INSTRUMENT_LOSSY` 且信息含档位 id / 补救 / runId；无损与缺失 ⇒ **不抛**（"不知道" ≠ "有损"）。 **v0.4.0 追加（产物 dtype）**：合成 safetensors 头 → BF16 放行 / F32 抛 `E_PRODUCT_DTYPE_VIOLATION` / 浮点 dtype 不唯一或没有未量化浮点或目录不存在 ⇒ `E_PRODUCT_DTYPE_UNKNOWN`；`F8_E4M3` 必须归入**量化**张量（按前缀判会把它当成未量化浮点，从而把所有产物误判成"未知"——已作为回归项钉住）；跨 dtype 比较抛 `E_DTYPE_COMPARISON_REFUSED` 且信息含 0.40pp 效应量；未知 dtype 不得参与比较；显式转换声明的 `from≠to`、`declaredBy`、`reason` 缺一即 `E_DTYPE_CONVERSION_INVALID`。',
@@ -118,7 +118,7 @@ export const FILE_ORDER = LIBS
 
 function renderFor(lib, mod, notes, pkg) {
   const L = []
-  L.push(`# @ai-infra/${lib} —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）`)
+  L.push(`# @xiciyang/${lib} —— 契约 v0（**frozen** 2026-09-28，长任务 1 / 阶段 B）`)
   L.push('')
   L.push(`> ${notes.title}。`)
   L.push('> **本文件的「导出面」一节由 `shared/gen-contracts.mjs` 从代码现场读取生成，请勿手改**；')

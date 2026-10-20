@@ -1,5 +1,5 @@
 {
-  "name": "@ai-infra/sandbox-core",
+  "name": "@xiciyang/sandbox-core",
   "version": "0.0.1",
   "description": "三级沙箱行为探测与产物转移 v0",
   "type": "module",
