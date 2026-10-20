@@ -179,14 +179,24 @@ export async function run(t) {
   const pkgPath = join(HERE, '..', 'package.json')
   const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'))
   const REQUIRED_OPT = ['torch', 'transformers', 'peft', 'trl', 'accelerate']
-  const depsOk = (p) => REQUIRED_OPT.every((k) => Object.keys(p.optionalDependencies || {}).includes(k))
-    && Object.keys(p.dependencies || {}).length === 0
-  t.assert(REQUIRED_OPT.every((k) => Object.keys(pkg.optionalDependencies || {}).includes(k)),
-    `训练框架作为可选依赖组显式声明（实际：${Object.keys(pkg.optionalDependencies || {}).join(', ') || '（无）'}）`)
+  // 训练框架必须是**可选**的，但「可选」有两种合法写法：
+  //   ① optionalDependencies：npm 会尝试安装（装库时可能顺带拉 torch 生态，很重）
+  //   ② peerDependencies + peerDependenciesMeta.optional：声明兼容面但不自动安装（0.0.2 起采用）
+  // 两者都满足「零运行时必需依赖 + 框架不进 dependencies」这条约束；判据必须同时认。
+  const optionalNeeded = (p) => {
+    const opt = Object.keys(p.optionalDependencies || {})
+    const peer = Object.keys(p.peerDependencies || {})
+    const meta = p.peerDependenciesMeta || {}
+    const optionalPeer = peer.filter((k) => meta[k] && meta[k].optional === true)
+    return REQUIRED_OPT.every((k) => opt.includes(k) || optionalPeer.includes(k))
+  }
+  const depsOk = (p) => optionalNeeded(p) && Object.keys(p.dependencies || {}).length === 0
+  t.assert(optionalNeeded(pkg),
+    `训练框架作为可选依赖组显式声明（optionalDependencies 或 optional peerDependencies；实际：optional=${Object.keys(pkg.optionalDependencies || {}).join(',') || '（无）'} / peer=${Object.keys(pkg.peerDependencies || {}).join(',') || '（无）'}）`)
   t.assert(Object.keys(pkg.dependencies || {}).length === 0,
     `零运行时必需依赖 —— 训练框架不得进 dependencies（实际：${Object.keys(pkg.dependencies || {}).join(', ') || '（空）'}）`)
   // 已知阳性对照：**证明这条判据不是恒真**。两种真实劣化各喂一次，判据必须报 false。
-  t.assert(depsOk({ ...pkg, optionalDependencies: { torch: '>=2' } }) === false,
+  t.assert(depsOk({ ...pkg, optionalDependencies: { torch: '>=2' }, peerDependencies: {}, peerDependenciesMeta: {} }) === false,
     '对照：可选依赖组缺项 → 判据必须为 false（证明判据会红）')
   t.assert(depsOk({ ...pkg, dependencies: { torch: '>=2' } }) === false,
     '对照：框架混入 dependencies → 判据必须为 false')
